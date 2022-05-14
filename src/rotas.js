@@ -32,7 +32,7 @@ export default function Rotas(navigation) {
           justifyContent:'center'
           
         },
-        tabBarActiveTintColor: 'green' ,// cor da ABA selecionado
+        tabBarActiveTintColor: '#158CDA' ,// cor da ABA selecionado
         tabBarInactiveTintColor: '#010101', //cor da ABA não selecionado
        
       }}

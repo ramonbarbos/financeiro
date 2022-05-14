@@ -4,9 +4,9 @@ import { Entypo } from '@expo/vector-icons';
 
 export default function ButtonNew({focused,size}) {
   return (
-    <View style={[styles.container, {backgroundColor: focused ? 'green' : '#010101'}]} >
-      <Entypo name="home" size={size} color={focused ? '#FFFFFF': '#FFFFFF' } />
-      <Text style={styles.text}>Home</Text>
+    <View style={[styles.container, {backgroundColor: focused ? '#EAF7FF' : '#010101'}]} >
+      <Entypo name="home" size={size} color={focused ? '#158CDA': '#FFFFFF' } />
+      <Text style={[styles.text, {color: focused ? '#158CDA' : '#FFFFFF'}]}>Home</Text>
     </View>
   );
 }

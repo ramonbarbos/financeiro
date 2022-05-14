@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import  React, { useState, useEffect } from 'react';
 import { AntDesign,Feather } from '@expo/vector-icons';
-import { StyleSheet, Text, View,FlatList,TextInput, ScrollView, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View,FlatList,TextInput, ScrollView, SafeAreaView,Image } from 'react-native';
 
 import Input from '../../components/input'
 
@@ -89,19 +89,18 @@ export default function Home({navigation}) {
 
   return (
     <ScrollView>
-    
+      
+    <View style={{flex:1,backgroundColor: '#158CDA',height:200, padding:20,justifyContent:'center',alignItems:'center'}}>
+    <View style={{}}>
+        <Text style={{fontSize:30,color: '#FFFFFF'}}>Total do Mês</Text>
+        <Text style={{fontSize:20,color: '#FFFFFF'}}>0,00</Text>
+      </View>
+    </View>
+
     <View style={styles.container}>
 
-    
-      <View style={styles.caixa_titulo}>
-        <Text style={styles.titulo}>Olá, Cliente</Text>
-
-      </View>
-
-
-        <View style={styles.container_2}>
-        <View style={styles.container_pesquisa}>
-        <Feather name="search" size={24} color="black" />
+    <View style={styles.container_pesquisa}>
+        <Feather name="search" size={24} color="grey" />
         <TextInput 
             style={styles.pesquisa}
             placeholder='Pesquisar'
@@ -111,6 +110,13 @@ export default function Home({navigation}) {
             />
 
         </View>
+
+    <View style={styles.container_2}>
+     
+
+
+        
+        
         
         <View style={styles.caixa}>
        
@@ -135,19 +141,16 @@ const styles=StyleSheet.create({
   container:{
     flex:1, 
     padding: 20,
+    backgroundColor: '#EAF7FF',      
 
  },
- caixa_titulo:{
-  flex: 1,
-  justifyContent:'center',
-  marginTop: 30
- },
+
  titulo:{
   fontSize:30,
+  color: '#FFFFFF'
  },
   container_2:{
      flex:1,
-      backgroundColor: '#F3F3F3',      
   },
   container_pesquisa:{
     flex:1,
@@ -157,7 +160,7 @@ const styles=StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 80
+    marginTop: 40
 },
   pesquisa:{
     width: 300,
