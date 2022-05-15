@@ -3,7 +3,9 @@ import  React, { useState, useEffect } from 'react';
 import { AntDesign,Feather } from '@expo/vector-icons';
 import { StyleSheet, Text, View,FlatList,TextInput, ScrollView, SafeAreaView,Image } from 'react-native';
 
-import Input from '../../components/input'
+import {Criar} from '../../database/criarbd'
+
+const db = Criar.getConnection();
 
 //Banco de dados provisorio
 const DATA = [
@@ -53,9 +55,13 @@ export default function Home({navigation}) {
 
   const [pesquisa, setPesquisa] = useState('');
   const [list, setList] = useState(DATA); //variavel dinamica
+  const [view, setView] = useState([]); // Visualizar o BD
+
+  
+  
+  
 
   //Banco de dados SQLite
-
   useEffect(() => {
     db.transaction(function (txn) {
       txn.executeSql(
@@ -70,6 +76,22 @@ export default function Home({navigation}) {
               []
             );
           }
+        }
+      );
+    });
+  }, []);
+
+  //Visualizar Banco de dados SQLite
+  useEffect(() => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        'SELECT * FROM table_user',
+        [],
+        (tx, results) => {
+          var temp = [];
+          for (let i = 0; i < results.rows.length; ++i)
+            temp.push(results.rows.item(i));
+            setView(temp);
         }
       );
     });
@@ -99,9 +121,9 @@ export default function Home({navigation}) {
         
          <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',padding:20}} >
       
-      <Text style={{fontSize:20}} >{item.title}</Text>
+      <Text style={{fontSize:20}} >{item.user_descricao}</Text>
       
-      <Text style={{fontSize:20}} >{item.idade}</Text>
+      <Text style={{fontSize:20}} >{item.user_valor}</Text>
   
     </View>
     </View>
@@ -114,7 +136,7 @@ export default function Home({navigation}) {
     <View style={{flex:1,backgroundColor: '#158CDA',height:200, padding:20,justifyContent:'center',alignItems:'center'}}>
     <View style={{}}>
         <Text style={{fontSize:30,color: '#FFFFFF'}}>Total do Mês</Text>
-        <Text style={{fontSize:20,color: '#FFFFFF'}}>0,00</Text>
+        <Text style={{fontSize:20,color: '#FFFFFF'}}>0</Text>
       </View>
     </View>
 
@@ -138,7 +160,7 @@ export default function Home({navigation}) {
        
         <FlatList
          style={styles.lista}
-        data={list}
+        data={view}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({item}) => listView(item)}
         />

@@ -1,5 +1,10 @@
+import  React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Dimensions,TouchableOpacity} from 'react-native';
+
+import {Criar} from '../../database/criarbd'
+
+const db = Criar.getConnection();
 
 export default function Create({navigation}) {
   const {width, height} = Dimensions.get('screen')
@@ -10,13 +15,13 @@ export default function Create({navigation}) {
 
 
   function Salvar(valor,descricao,data,categoria){
-    console.log(valor,descricao,data,categoria);
+    
         
 
     //Inserindo Linha na Tabela
     db.transaction(function (tx) {
       tx.executeSql(
-        'INSERT INTO table_user (user_client, user_pedido,user_mesa) VALUES (?,?,?,?)',
+        'INSERT INTO table_user (user_valor, user_descricao,user_data,user_categoria) VALUES (?,?,?,?)',
         [valor,descricao,data,categoria],
         (tx, results) => {
           console.log('Results', results.rowsAffected);
