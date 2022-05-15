@@ -21,7 +21,6 @@ export default function Rotas(navigation) {
     <Tab.Navigator
       screenOptions={{
         tabBarShowLabel: false, // com nomes
-        headerShown: false,
         
         tabBarStyle: {
           height:75,
@@ -42,6 +41,8 @@ export default function Rotas(navigation) {
        name="Home"
        component={Home}
        options={{
+      headerShown: false,
+
         tabBarLabel:'',
          tabBarIcon:({focused,size,color})=>(
           <ButtonHome size={size} color={color} focused={focused}/>
@@ -50,7 +51,7 @@ export default function Rotas(navigation) {
        />
 
       <Tab.Screen
-      name="Create" 
+      name="Nova Despesa" 
       component={Create}
       options={{
         

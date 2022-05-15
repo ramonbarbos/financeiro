@@ -54,6 +54,27 @@ export default function Home({navigation}) {
   const [pesquisa, setPesquisa] = useState('');
   const [list, setList] = useState(DATA); //variavel dinamica
 
+  //Banco de dados SQLite
+
+  useEffect(() => {
+    db.transaction(function (txn) {
+      txn.executeSql(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name='table_user'",
+        [],
+        function (tx, res) {
+          console.log('item:', res.rows.length);
+          if (res.rows.length == 0) {
+            txn.executeSql('DROP TABLE IF EXISTS table_user', []);
+            txn.executeSql(
+              'CREATE TABLE IF NOT EXISTS table_user(user_id INTEGER PRIMARY KEY AUTOINCREMENT, user_valor VARCHAR(20),user_descricao VARCHAR(20), user_data INT(20), user_categoria VARCHAR(20))',
+              []
+            );
+          }
+        }
+      );
+    });
+  }, []);
+
   //Filtragem de Pesquisa
   useEffect(()=>{
     if(pesquisa === ''){
@@ -74,13 +95,13 @@ export default function Home({navigation}) {
 
   const listView = (item) =>{
     return(
-      <View> 
+      <View style={styles.caixa_contant}> 
         
-         <View style={styles.caixa_contant}>
-      <Text style={{fontSize:20} }>Nome</Text>
-      <Text  >{item.title}</Text>
-      <Text style={{fontSize:20} }>Idade</Text>
-      <Text  >{item.idade}</Text>
+         <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',padding:20}} >
+      
+      <Text style={{fontSize:20}} >{item.title}</Text>
+      
+      <Text style={{fontSize:20}} >{item.idade}</Text>
   
     </View>
     </View>
@@ -112,12 +133,7 @@ export default function Home({navigation}) {
         </View>
 
     <View style={styles.container_2}>
-     
-
-
-        
-        
-        
+    
         <View style={styles.caixa}>
        
         <FlatList
@@ -175,9 +191,10 @@ const styles=StyleSheet.create({
   caixa_contant:{
     backgroundColor: '#FFFFFF',
     margin:5,
-    height: 120,
+    height: 100,
     borderRadius: 5,
     padding:10,
+    justifyContent:'center'
   },  
   lista:{
     
