@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import  React, { useState, useEffect } from 'react';
-import { AntDesign,Feather } from '@expo/vector-icons';
-import { StyleSheet, Text, View,FlatList,TextInput, ScrollView, SafeAreaView,Image } from 'react-native';
+import { AntDesign,Feather,FontAwesome } from '@expo/vector-icons';
+import { StyleSheet, Text, View,FlatList,TextInput, ScrollView, SafeAreaView,Image, TouchableOpacity } from 'react-native';
 
 import {Criar} from '../../database/criarbd'
 
@@ -56,10 +56,8 @@ export default function Home({navigation}) {
   const [pesquisa, setPesquisa] = useState('');
   const [list, setList] = useState(DATA); //variavel dinamica
   const [view, setView] = useState([]); // Visualizar o BD
+  const [id, setId] = useState('3');
 
-  
-  
-  
 
   //Banco de dados SQLite
   useEffect(() => {
@@ -97,6 +95,8 @@ export default function Home({navigation}) {
     });
   }, []);
 
+
+
   //Filtragem de Pesquisa
   useEffect(()=>{
     if(pesquisa === ''){
@@ -115,20 +115,44 @@ export default function Home({navigation}) {
   },[pesquisa])
 
 
+  function deleteView(id){
+    db.transaction((tx) => {
+      tx.executeSql(
+        'DELETE FROM  table_user where user_id=?',
+        [id],
+        (tx, results) => {
+          console.log('Results', results.rowsAffected);
+          Alert.alert("Aviso","ID Apagado")
+         
+        }
+      );
+    });
+  }
+
+  //Visualisar informações
   const listView = (item) =>{
-    return(
-      <View style={styles.caixa_contant}> 
-        
-         <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',padding:20}} >
-      
-      <Text style={{fontSize:20}} >{item.user_descricao}</Text>
-      
-      <Text style={{fontSize:20}} >{item.user_valor}</Text>
   
-    </View>
-    </View>
+    return(
+      
+        <View key={item.id} style={styles.caixa_contant}> 
+                
+                <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',padding:20}} >
+            
+            <Text style={{fontSize:20}} >{item.user_descricao}</Text>
+            <Text style={{fontSize:20}} >{item.user_valor}</Text>
+            <TouchableOpacity style={{width: 30,height:30, backgroundColor: '#F8777C', justifyContent: 'center', alignItems: 'center', borderRadius: 8}}
+            onPress={()=>deleteView(id)}
+            >
+             <FontAwesome name="remove" size={24} color="#fff" />
+            </TouchableOpacity>
+          </View>
+          </View>
+          
+      
     )
   };
+
+ 
 
   return (
     <ScrollView>

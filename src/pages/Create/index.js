@@ -42,12 +42,12 @@ export default function Create({navigation}) {
       <View style={{ justifyContent: 'center', alignItems:'center'}} >
       <TextInput 
             style={styles.input_valor}
-            placeholder='Valor'
+            placeholder='0,00'
             keyboardType="numeric"
            onChangeText={setValor}
             />
       </View>
-
+      
       <View>
 
         <View style={{alignItems: 'center', justifyContent: 'center',marginTop:50,}}>
