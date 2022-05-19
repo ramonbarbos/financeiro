@@ -114,7 +114,7 @@ export default function Home({navigation}) {
 
   //Deletar Dados
   function deleteView(key){
-    if(deleteView = key){
+    
       Alert.alert(
         "Aviso",
         "Deseja deletar?",
@@ -140,7 +140,7 @@ export default function Home({navigation}) {
         )
         }
       )
-   }
+   
 
   }
 
