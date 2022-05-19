@@ -1,10 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import  React, { useState, useEffect } from 'react';
 import { AntDesign,Feather,FontAwesome } from '@expo/vector-icons';
-import { StyleSheet, Text, View,FlatList,TextInput, ScrollView, SafeAreaView,Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View,FlatList,TextInput, ScrollView, SafeAreaView,Image, TouchableOpacity, Alert } from 'react-native';
 
 import {Criar} from '../../database/criarbd'
-
+import Header from '../../components/header';
+import Barra from '../../components/barra';
 const db = Criar.getConnection();
 
 //Banco de dados provisorio
@@ -50,13 +51,12 @@ const DATA = [
 ]
 
 
-
 export default function Home({navigation}) {
 
   const [pesquisa, setPesquisa] = useState('');
   const [list, setList] = useState(DATA); //variavel dinamica
   const [view, setView] = useState([]); // Visualizar o BD
-  const [id, setId] = useState('3');
+ 
 
 
   //Banco de dados SQLite
@@ -70,7 +70,7 @@ export default function Home({navigation}) {
           if (res.rows.length == 0) {
             txn.executeSql('DROP TABLE IF EXISTS table_user', []);
             txn.executeSql(
-              'CREATE TABLE IF NOT EXISTS table_user(user_id INTEGER PRIMARY KEY AUTOINCREMENT, user_valor VARCHAR(20),user_descricao VARCHAR(20), user_data INT(20), user_categoria VARCHAR(20))',
+              'ALTER TABLE IF NOT EXISTS table_user(user_id INTEGER PRIMARY KEY AUTOINCREMENT, user_valor INT(20),user_descricao VARCHAR(20), user_data INT(20), user_categoria VARCHAR(20))',
               []
             );
           }
@@ -95,8 +95,6 @@ export default function Home({navigation}) {
     });
   }, []);
 
-
-
   //Filtragem de Pesquisa
   useEffect(()=>{
     if(pesquisa === ''){
@@ -114,55 +112,71 @@ export default function Home({navigation}) {
     }
   },[pesquisa])
 
-
-  function deleteView(id){
-    db.transaction((tx) => {
-      tx.executeSql(
-        'DELETE FROM  table_user where user_id=?',
-        [id],
-        (tx, results) => {
-          console.log('Results', results.rowsAffected);
-          Alert.alert("Aviso","ID Apagado")
-         
-        }
+  //Deletar Dados
+  function deleteView(key){
+    if(deleteView = key){
+      Alert.alert(
+        "Aviso",
+        "Deseja deletar?",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          { text: "OK", onPress: () => del(key) }
+        ]
       );
-    });
+    };
+    function del(key){
+      db.transaction((tx) => {
+        tx.executeSql(
+          'DELETE FROM  table_user where user_id=?',
+          [key],
+          (tx, results) => {
+            console.log('Results', results.rowsAffected);
+            console.log('O ID '+ ' '+key+' foi deletado')
+          }
+        )
+        }
+      )
+   }
+
   }
 
   //Visualisar informações
-  const listView = (item) =>{
-  
-    return(
+  const listView = (item) =>{  
       
-        <View key={item.id} style={styles.caixa_contant}> 
-                
-                <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',padding:20}} >
+      let key = item.user_id
+    return(
+
+        <View  style={styles.caixa_contant}> 
+
+            <Barra/>
+             
+            <View style={{flexDirection:'row',justifyContent:'space-between',width:'100%',alignItems:'center',padding:20,}}>
+
+            <View style={{ width: 160}}>
+              <Text style={{fontSize:20}} >{item.user_descricao}</Text>
+              <Text style={{fontSize:13}} >{item.user_categoria}</Text>
+            </View>
+
+            <Text style={{fontSize:20, marginLeft:100,marginRight: 15}} >{item.user_valor}</Text>
             
-            <Text style={{fontSize:20}} >{item.user_descricao}</Text>
-            <Text style={{fontSize:20}} >{item.user_valor}</Text>
             <TouchableOpacity style={{width: 30,height:30, backgroundColor: '#F8777C', justifyContent: 'center', alignItems: 'center', borderRadius: 8}}
-            onPress={()=>deleteView(id)}
+            onPress={()=>deleteView(key)}
             >
              <FontAwesome name="remove" size={24} color="#fff" />
             </TouchableOpacity>
           </View>
-          </View>
           
-      
+          </View>        
     )
   };
-
- 
-
+  
   return (
-    <ScrollView>
-      
-    <View style={{flex:1,backgroundColor: '#158CDA',height:200, padding:20,justifyContent:'center',alignItems:'center'}}>
-    <View style={{}}>
-        <Text style={{fontSize:30,color: '#FFFFFF'}}>Total do Mês</Text>
-        <Text style={{fontSize:20,color: '#FFFFFF'}}>0</Text>
-      </View>
-    </View>
+    <ScrollView style={{backgroundColor: '#EAF7FF'}}>
+    <Header/>
 
     <View style={styles.container}>
 
@@ -173,15 +187,11 @@ export default function Home({navigation}) {
             placeholder='Pesquisar'
             keyboardType="default"
             onChangeText={setPesquisa}
-             
             />
-
         </View>
 
     <View style={styles.container_2}>
-    
         <View style={styles.caixa}>
-       
         <FlatList
          style={styles.lista}
         data={view}
@@ -190,10 +200,7 @@ export default function Home({navigation}) {
         />
         </View>
         </View>
-      
         </View>
-    
-    
     </ScrollView>
   );
 }
@@ -235,12 +242,14 @@ const styles=StyleSheet.create({
   },
   
   caixa_contant:{
+    flex:1,
+    flexDirection:'row',
     backgroundColor: '#FFFFFF',
-    margin:5,
+    marginBottom:10,
     height: 100,
     borderRadius: 5,
-    padding:10,
-    justifyContent:'center'
+    padding:0,
+    alignItems:'center'
   },  
   lista:{
     
