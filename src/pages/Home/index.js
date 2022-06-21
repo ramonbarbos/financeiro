@@ -1,11 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import  React, { useState, useEffect } from 'react';
-import { AntDesign,Feather,FontAwesome } from '@expo/vector-icons';
-import { StyleSheet, Text, View,FlatList,TextInput, ScrollView, SafeAreaView,Image, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, View,FlatList,TextInput, ScrollView, SafeAreaView,Image, TouchableOpacity, Alert, Modal } from 'react-native';
+import { AntDesign,Feather,FontAwesome,Entypo } from '@expo/vector-icons';
 
 import {Criar} from '../../database/criarbd'
 import Header from '../../components/header';
 import Barra from '../../components/barra';
+
 const db = Criar.getConnection();
 
 //Banco de dados provisorio
@@ -50,12 +51,13 @@ const DATA = [
 
 ]
 
-
+ 
 export default function Home({navigation}) {
 
   const [pesquisa, setPesquisa] = useState('');
   const [list, setList] = useState(DATA); //variavel dinamica
   const [view, setView] = useState([]); // Visualizar o BD
+  const [modalVisible, setModalVisible] = useState(false); // modal
  
 
 
@@ -140,48 +142,93 @@ export default function Home({navigation}) {
         )
         }
       )
-   
-
   }
+
+ 
 
   //Visualisar informações
   const listView = (item) =>{  
       
       let key = item.user_id
     return(
+        
+        <View style={{alignItems:'center'}}> 
+          <TouchableOpacity onPress={()=>{setModalVisible(true)}} style={styles.caixa_contant}>
+              <View style={{flexDirection:'row',width:'100%',alignItems:'center',padding:20}}>
+              <Barra/>
 
-        <View  style={styles.caixa_contant}> 
-
-            <Barra/>
-             
-            <View style={{flexDirection:'row',justifyContent:'space-between',width:'100%',alignItems:'center',padding:20,}}>
-
-            <View style={{ width: 160}}>
-              <Text style={{fontSize:20}} >{item.user_descricao}</Text>
-              <Text style={{fontSize:13}} >{item.user_categoria}</Text>
-            </View>
-
-            <Text style={{fontSize:20, marginLeft:100,marginRight: 15}} >{item.user_valor}</Text>
+              <View style={{justifyContent:'space-between',flexDirection:'row',alignItems:'center',width:'80%',}}>
+                <View style={{}}>
+                  <Text style={{fontSize:20}} >{item.user_descricao}</Text>
+                  <Text style={{fontSize:13}} >{item.user_categoria}</Text>
+                </View>
+                
+                <View style={{}}>
+                  <Text style={{fontSize:20,}} >R$ {item.user_valor}</Text>
+                </View>
+                
+              </View>
             
-            <TouchableOpacity style={{width: 30,height:30, backgroundColor: '#F8777C', justifyContent: 'center', alignItems: 'center', borderRadius: 8}}
-            onPress={()=>deleteView(key)}
+             
+            </View>
+          </TouchableOpacity>
+          <View style={{height:1, width: '90%', backgroundColor: '#ECECEC'}}></View>
+
+          <Modal
+            animationType='slide'
+            transparent={true}
+            visible={modalVisible}
+            style={{}}
             >
-             <FontAwesome name="remove" size={24} color="#fff" />
-            </TouchableOpacity>
-          </View>
-          
-          </View>        
+              <View style={styles.modal}>
+
+                <View style={styles.overView}>
+                    <View style={{height:25,justifyContent:'center',alignItems:'center', }}>
+                      <View style={{}} >
+                        <TouchableOpacity style={{width:120,height:25,alignItems:'center',justifyContent:'center' }} onPress={()=>{setModalVisible(false)}}> 
+                        <View style={{width:80,height:4, backgroundColor:'#A6A6A6', borderRadius: 20}} ></View>                     
+                      </TouchableOpacity>
+                      </View>
+                    </View>
+
+                  
+                  <TouchableOpacity style={{height:60,justifyContent:'center' }}>
+                  <View style={{flexDirection: 'row', width: '100%', }}>
+                      <Entypo name="pencil" size={22} color="black" />
+                      <Text style={{fontSize:20,color: 'black', fontWeight:'bold', marginLeft:15}}>Editar</Text>
+                    </View>
+                  </TouchableOpacity>
+                  <View style={{height:1, width: '100%', backgroundColor: '#ECECEC'}}></View>
+
+                  <TouchableOpacity style={{height:60,justifyContent:'center' }}
+                  onPress={()=>deleteView(key)}>
+                  <View style={{flexDirection: 'row', width: '100%', }}>
+                      <FontAwesome name="trash" size={22} color="black" />
+                      <Text style={{fontSize:20,color: 'black', fontWeight:'bold', marginLeft:15}}>Excluir</Text>
+                    </View>
+                  </TouchableOpacity>
+                  <View style={{height:1, width: '100%', backgroundColor: '#ECECEC'}}></View>
+
+                </View>
+
+              </View>
+            
+          </Modal>
+
+          </View>       
+           
     )
   };
   
   return (
     <ScrollView style={{backgroundColor: '#EAF7FF'}}>
     <Header/>
+    
 
     <View style={styles.container}>
 
     <View style={styles.container_pesquisa}>
-        <Feather name="search" size={24} color="grey" />
+        <Feather style={{marginLeft: 15}} name="search" size={22} color="grey" />
         <TextInput 
             style={styles.pesquisa}
             placeholder='Pesquisar'
@@ -192,12 +239,14 @@ export default function Home({navigation}) {
 
     <View style={styles.container_2}>
         <View style={styles.caixa}>
-        <FlatList
-         style={styles.lista}
-        data={view}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({item}) => listView(item)}
-        />
+       
+          <FlatList
+          style={styles.lista}
+          data={view}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({item}) => listView(item)}
+          />
+        
         </View>
         </View>
         </View>
@@ -220,38 +269,50 @@ const styles=StyleSheet.create({
  },
   container_2:{
      flex:1,
+         
+
   },
   container_pesquisa:{
     flex:1,
-    height: 50,
-    borderRadius: 10,
+    width: '100%',
+    height: 45,
     backgroundColor: '#FFFFFF',
-    justifyContent: 'center',
     flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 40
+    alignItems:'center',
 },
   pesquisa:{
-    width: 300,
     marginLeft: 15
   },
   caixa:{ 
     flex:1,
-    marginTop:20, 
-    
+    marginTop:20,
+    height:'120%', 
+    backgroundColor: '#FFFFFF',
+    borderRadius: 5,
   },
   
   caixa_contant:{
     flex:1,
     flexDirection:'row',
     backgroundColor: '#FFFFFF',
-    marginBottom:10,
     height: 100,
-    borderRadius: 5,
-    padding:0,
     alignItems:'center'
   },  
   lista:{
     
+  },
+  modal:{
+   flex:1,
+   backgroundColor: 'rgba(0,0,0,0.2)',
+  },
+  overView:{
+    flex:1,
+    elevation:10,
+    paddingLeft: 35,
+    paddingRight: 35,
+    backgroundColor: '#FFFFFF',
+    top: '65%',
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
   }
 })

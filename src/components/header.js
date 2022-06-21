@@ -35,7 +35,7 @@ useEffect(() => {
   }
 
   return (
-    <View style={{flex:1,backgroundColor: '#158CDA',height:200, padding:20,justifyContent:'center',alignItems:'center', borderBottomEndRadius: 100}}>
+    <View style={{flex:1,backgroundColor: '#158CDA',height:200, padding:20,justifyContent:'center',alignItems:'center'}}>
      <FlatList
         style={{marginTop: 50}}
         data={total}
