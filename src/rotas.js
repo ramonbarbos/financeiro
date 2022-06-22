@@ -46,7 +46,7 @@ function MyTabs(navigation) {
   >
 
     <Tab.Screen
-     name="Inicio"
+     name="Home"
      component={Home}
      options={{
     headerShown: false,
@@ -95,12 +95,12 @@ function MyTabs(navigation) {
 
 export default function Rotas() {
   return (
-    
     <Stack.Navigator >
-      <Stack.Screen name="Principal" component={MyTabs} options={{headerShown: false}} />
-      <Stack.Screen name="Atual" component={Atual} options={{headerShown: true}}/>
+    <Stack.Screen name="Home" component={MyTabs} options={{headerShown: false}} />
+    <Stack.Screen name="Atual" component={Atual} options={{headerShown: true}}/>
+  
+  </Stack.Navigator>
     
-    </Stack.Navigator>
   );
 }
 

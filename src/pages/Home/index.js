@@ -230,8 +230,8 @@ export default function Home({navigation}) {
   
   return (
     <ScrollView style={{backgroundColor: '#EAF7FF'}}>
-    <Header/>
-    
+    <Header navigation={navigation} /> 
+    {/*Passando parametros pelo componente */}
 
     <View style={styles.container}>
 
