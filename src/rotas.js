@@ -4,24 +4,43 @@ import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons,Foundation,FontAwesome  } from '@expo/vector-icons';
-
+import { createStackNavigator } from '@react-navigation/stack';
 import ButtonHome from './components/ButtonHome';
 
 import Home from './pages/Home';
 import Create from './pages/Create';
 import Grafico from './pages/Grafico';
 import Config from './pages/Config';
+import Atual from './pages/Atual';
+
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
+function MyStack(navigation) {
+  return (
+    
+    <Stack.Navigator >
+      <Stack.Screen name="Homee" component={Home} options={{headerShown: true}} />
+      <Stack.Screen name="Atual" component={Atual} options={{headerShown: true}}/>
+      
+    </Stack.Navigator>
+    
+  );
+}
+function MyTabs(navigation) {
+  return (
+    <Text>Olá</Text> 
+  );
+}
 
 export default function Rotas(navigation) {
   return (
-   
+    
     <Tab.Navigator
       screenOptions={{
         tabBarShowLabel: false, // com nomes
-        
+      
         tabBarStyle: {
           height:75,
           backgroundColor: '#FFFFFF', //cor da barra
@@ -38,10 +57,10 @@ export default function Rotas(navigation) {
     >
 
       <Tab.Screen
-       name="Home"
-       component={Home}
+       name="Inicio"
+       component={MyStack}
        options={{
-      headerShown: false,
+      headerShown: true,
 
         tabBarLabel:'',
          tabBarIcon:({focused,size,color})=>(
@@ -79,9 +98,8 @@ export default function Rotas(navigation) {
         )
       }}
       />
-
+     
     </Tab.Navigator>
-  
   );
 }
 

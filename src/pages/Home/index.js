@@ -58,6 +58,7 @@ export default function Home({navigation}) {
   const [list, setList] = useState(DATA); //variavel dinamica
   const [view, setView] = useState([]); // Visualizar o BD
   const [modalVisible, setModalVisible] = useState(false); // modal
+  const [editarVisible, setEditarVisible] = useState(''); // modal editar
  
 
 
@@ -173,6 +174,8 @@ export default function Home({navigation}) {
             </View>
           </TouchableOpacity>
           <View style={{height:1, width: '90%', backgroundColor: '#ECECEC'}}></View>
+                  
+                  {/*Modal Principal*/}
 
           <Modal
             animationType='slide'
@@ -191,14 +194,19 @@ export default function Home({navigation}) {
                       </View>
                     </View>
 
+                  {/*Editar*/}
+                  <TouchableOpacity style={{height:60,justifyContent:'center' }}
+                  onPress={()=>navigation.navigate('Atual')}>
                   
-                  <TouchableOpacity style={{height:60,justifyContent:'center' }}>
                   <View style={{flexDirection: 'row', width: '100%', }}>
                       <Entypo name="pencil" size={22} color="black" />
                       <Text style={{fontSize:20,color: 'black', fontWeight:'bold', marginLeft:15}}>Editar</Text>
                     </View>
                   </TouchableOpacity>
                   <View style={{height:1, width: '100%', backgroundColor: '#ECECEC'}}></View>
+                 
+
+                  {/*Excluir*/}
 
                   <TouchableOpacity style={{height:60,justifyContent:'center' }}
                   onPress={()=>deleteView(key)}>
