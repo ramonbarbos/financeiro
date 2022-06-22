@@ -169,7 +169,7 @@ export default function Home({navigation}) {
                 </View>
                 
               </View>
-            
+        
              
             </View>
           </TouchableOpacity>
