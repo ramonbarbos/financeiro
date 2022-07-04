@@ -59,8 +59,8 @@ export default function Home({navigation}) {
   const [view, setView] = useState([]); // Visualizar o BD
   const [modalVisible, setModalVisible] = useState(false); // modal
   const [editarVisible, setEditarVisible] = useState(''); // modal editar
-  const [pago, setPago] = useState([]);
-  const [total, setTotal] = useState([]); 
+  const [pago, setPago] = useState('');
+ 
 
 
   //Banco de dados SQLite
@@ -74,7 +74,7 @@ export default function Home({navigation}) {
           if (res.rows.length == 0) {
             txn.executeSql('DROP TABLE IF EXISTS table_user', []);
             txn.executeSql(
-              'CREATE TABLE IF NOT EXISTS table_user(user_id INTEGER PRIMARY KEY AUTOINCREMENT, user_valor INT(20),user_descricao VARCHAR(20), user_data INT(20), user_categoria VARCHAR(20), user_pago INT(100))',
+              'ALTER TABLE IF NOT EXISTS table_user(user_id INTEGER PRIMARY KEY AUTOINCREMENT, user_valor INT(20),user_descricao VARCHAR(20), user_data INT(20), user_categoria VARCHAR(20), user_pago INT(100))',
               []
             );
           }
@@ -99,6 +99,7 @@ export default function Home({navigation}) {
       );
     });
   }, []);
+
 
 
 
@@ -149,12 +150,25 @@ export default function Home({navigation}) {
         }
       )
   };
+
+ 
+
+
+
   
-  function Pagar(item,pago )  {
+  function Pagar(item)  {
   
+    //let total = 653;
+    //let pago = 60;
+    //let cal = 653 - 60;
+    //let resut =total - cal;
+    //console.log(resut);
+
+   console.log(item.user_total)
+
     
-   console.log(item.user_pago)
-  
+   
+
     
   }
   
@@ -178,7 +192,7 @@ export default function Home({navigation}) {
                 
                 <View style={{}}>
                   <Text style={{fontSize:20,}} >R$ {item.user_valor}</Text>
-                  <Text style={{fontSize:20,}} >R$ {item.user_pago}</Text>
+                  
                 </View>
                 
               </View>
@@ -276,9 +290,10 @@ export default function Home({navigation}) {
        
           <FlatList
           style={styles.lista}
-          data={view}
+          data={view }
           keyExtractor={(item, index) => index.toString()}
           renderItem={({item}) => listView(item)}
+          showsVerticalScrollIndicator = {false}
           />
         
         </View>
@@ -332,6 +347,7 @@ const Total=(item)=>{
   /*Calculo pago*/
   const Pago=(item)=>{
 
+    
 
     return(
         <View style={{ flexDirection:'row', alignItems:'center', }}>
@@ -339,7 +355,7 @@ const Total=(item)=>{
           <View style={{}}>
             <View style={{alignItems:'flex-start'}}>
                 <Text style={{fontSize:18,color: '#FFFFFF'}}>Pago</Text>
-                <Text style={{fontSize:20,color: '#FFFFFF', fontWeight:'bold'}} >{pagar}</Text>
+                <Text style={{fontSize:20,color: '#FFFFFF', fontWeight:'bold'}} >{pagar} </Text>
                 
 
             </View>

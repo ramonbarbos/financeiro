@@ -19,8 +19,15 @@ const Stack = createStackNavigator();
 
 function MyStack(navigation) {
   return (
-    
-    0
+    <Tab.Screen 
+    name="Grafico" 
+    component={Grafico}
+    options={{
+      tabBarIcon:({size,color})=>(
+        <Foundation name="graph-pie" size={30} color={color} />
+      )
+    }}
+    />
     
   );
 }
@@ -62,6 +69,7 @@ function MyTabs(navigation) {
     name="Nova Despesa" 
     component={Create}
     options={{
+    headerShown: true,
       
       tabBarIcon:({size,color})=>(
         <MaterialIcons name="add-box" size={30} color={color} />
@@ -69,15 +77,7 @@ function MyTabs(navigation) {
     }}
     />
 
-    <Tab.Screen 
-    name="Grafico" 
-    component={Grafico}
-    options={{
-      tabBarIcon:({size,color})=>(
-        <Foundation name="graph-pie" size={30} color={color} />
-      )
-    }}
-    />
+
     <Tab.Screen 
     name="Config" 
     component={Config}

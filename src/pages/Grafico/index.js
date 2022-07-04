@@ -1,11 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button} from 'react-native';
-
+import Data from '../../components/Data';
 export default function Grafico({navigation}) {
   return (
     <View style={styles.container}>
       <Text>Grafico</Text>
-      
+      <Data/>
     </View>
   );
 }

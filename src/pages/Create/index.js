@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Dimensions,TouchableOpacity} from 'react-native';
 
 import {Criar} from '../../database/criarbd'
+import Data from '../../components/Data';
 
 const db = Criar.getConnection();
 
@@ -50,23 +51,19 @@ export default function Create({navigation}) {
       
       <View>
 
-        <View style={{alignItems: 'center', justifyContent: 'center',marginTop:50,}}>
+        <View style={{alignItems: 'center', justifyContent: 'center',marginTop:50,width: '100%'}}>
         <TextInput 
-            style={{borderBottomWidth: 1,width:350,marginTop:20}}
+            style={styles.input_outros}
             placeholder='Descrição'
             keyboardType="default"
             onChangeText={setDescricao}
            
             />
+
+            <Data/>
+
             <TextInput 
-            style={{borderBottomWidth: 1,width:350,marginTop:40}}
-            placeholder='Data de Vencimento'
-            keyboardType="numeric"
-            onChangeText={setData}
-           
-            />
-            <TextInput 
-            style={{borderBottomWidth: 1,width:350,marginTop:40}}
+            style={styles.input_outros}
             placeholder='Categoria'
             keyboardType="default"
            onChangeText={setCategoria}
@@ -74,7 +71,7 @@ export default function Create({navigation}) {
             />
 
             <TouchableOpacity 
-            style={{backgroundColor:'#158CDA',width:350,height:45,borderRadius:2,marginTop:40,justifyContent:'center', alignItems:'center'}}
+            style={{backgroundColor:'#158CDA',width:'100%',height:45,borderRadius:2,marginTop:50,justifyContent:'center', alignItems:'center'}}
             onPress={()=> Salvar(valor,descricao,data,categoria)}
             >
               <Text style={{color:'white', fontSize:20}}>Salvar</Text>
@@ -97,15 +94,18 @@ const styles=StyleSheet.create({
       backgroundColor: 'white',    
     },
     input_valor:{
-      width:200,
+      width:'50%',
       height:60,
       borderBottomWidth: 1,
       justifyContent:'center',
+      textAlign:'center',
+      fontSize: 20
     },
     input_outros:{
-      width:200,
+      width:'100%',
       height:60,
       borderBottomWidth: 1,
-      justifyContent:'center',
+      fontSize: 15
+     
     }
   });
