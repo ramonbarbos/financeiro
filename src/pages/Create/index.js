@@ -61,14 +61,14 @@ export default function Create({navigation}) {
             onChangeText={setDescricao}
            
             />
-            <Text>{categoria}</Text>
+            
             <Data/>
 
             <Select 
              options={callList}
              onChangeSelect={setCategoria}
              text='Selecione uma categoria'
-             label={id}
+             
              />
 
             <TouchableOpacity 

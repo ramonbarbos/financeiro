@@ -6,7 +6,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import { callList } from './callList';
 
 
-export default function Select({options, onChangeSelect, text, label, optionComponent}) {
+export default function Select({options, onChangeSelect, text}) {
     const [txt, setTxt] = useState(text);
     const [modalVisible, setModalVisible] = useState(false)
     const [select, setSelect] = useState()

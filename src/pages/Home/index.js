@@ -179,96 +179,97 @@ export default function Home({navigation}) {
       
       let key = item.user_id
     return(
-        
-        <View style={{alignItems:'center',}}> 
-          <TouchableOpacity onPress={()=>{setModalVisible(true)}} style={styles.caixa_contant}>
-              <View style={{flexDirection:'row',width:'100%',alignItems:'center',padding:20}}>
-              <Barra/>
+        <View style={styles.caixa}>
+            <View style={{alignItems:'center',borderBottomColor: '#ddd',
+        borderBottomWidth: 1,}}> 
+              <TouchableOpacity onPress={()=>{setModalVisible(true)}} style={styles.caixa_contant}>
+                  <View style={{flexDirection:'row',width:'100%',alignItems:'center',padding:20}}>
+                  <Barra/>
 
-              <View style={{justifyContent:'space-between',flexDirection:'row',alignItems:'center',width:'80%',}}>
-                <View style={{}}>
-                  <Text style={{fontSize:20}} >{item.user_descricao}</Text>
-                  <Text style={{fontSize:13}} >{item.user_categoria}</Text>
-                </View>
-                
-                <View style={{}}>
-                  <Text style={{fontSize:20,}} >R$ {item.user_valor}</Text>
-                  
-                </View>
-                
-              </View>
-        
-             
-            </View>
-          </TouchableOpacity>
-          <View style={{height:1, width: '90%', backgroundColor: '#ECECEC'}}></View>
-                  
-                  {/*Modal Principal*/}
-
-          <Modal
-            animationType='slide'
-            transparent={true}
-            visible={modalVisible}
-            style={{}}
-            onRequestClose={()=> setModalVisible(false)}
-            >
-              <View style={styles.modal}>
-
-                <View style={styles.overView}>
-                    <View style={{height:25,justifyContent:'center',alignItems:'center', }}>
-                      <View style={{}} >
-                        <TouchableOpacity style={{width:120,height:25,alignItems:'center',justifyContent:'center' }} onPress={()=>{setModalVisible(false)}}> 
-                        <View style={{width:80,height:4, backgroundColor:'#A6A6A6', borderRadius: 20}} ></View>                     
-                      </TouchableOpacity>
-                      </View>
+                  <View style={{justifyContent:'space-between',flexDirection:'row',alignItems:'center',width:'80%',}}>
+                    <View style={{}}>
+                      <Text style={{fontSize:20}} >{item.user_descricao}</Text>
+                      <Text style={{fontSize:13}} >{item.user_categoria}</Text>
                     </View>
-
-                  {/*Pagar*/}
-
-                    <TouchableOpacity style={{height:60,justifyContent:'center' }}
                     
-                  onPress={() => {
+                    <View style={{}}>
+                      <Text style={{fontSize:20,}} >R$ {item.user_valor}</Text>
+                      
+                    </View>
                     
-                  }}>
-                  
-                  <View style={{flexDirection: 'row', width: '100%', alignItems:'center',justifyContent:'center'}}>
-                      <AntDesign name="checkcircle" size={22} color="black" />
-                      <Text style={{fontSize:20,color: 'black', fontWeight:'bold', marginLeft:15}}>Pagar</Text>
-                    </View>
-                  </TouchableOpacity>
-                  <View style={{height:1, width: '100%', backgroundColor: '#ECECEC'}}></View>
-
-                  {/*Editar*/}
-                  <TouchableOpacity style={{height:60,justifyContent:'center' }}
-                  onPress={()=>navigation.navigate('Atual')}>
-                  
-                  <View style={{flexDirection: 'row', width: '100%',alignItems:'center', justifyContent:'center' }}>
-                      <Entypo name="pencil" size={22} color="black" />
-                      <Text style={{fontSize:20,color: 'black', fontWeight:'bold', marginLeft:15}}>Editar</Text>
-                    </View>
-                  </TouchableOpacity>
-                  <View style={{height:1, width: '100%', backgroundColor: '#ECECEC'}}></View>
-                 
- 
-                  {/*Excluir*/}
-
-                  <TouchableOpacity style={{height:60,justifyContent:'center' }}
-                  onPress={()=>deleteView(key)}>
-                  <View style={{flexDirection: 'row', width: '100%',alignItems:'center',justifyContent:'center' }}>
-                      <FontAwesome name="trash" size={22} color="black" />
-                      <Text style={{fontSize:20,color: 'black', fontWeight:'bold', marginLeft:15}}>Excluir</Text>
-                    </View>
-                  </TouchableOpacity>
-                  <View style={{height:1, width: '100%', backgroundColor: '#ECECEC'}}></View>
-
-                </View>
-
-              </View>
+                  </View>
             
-          </Modal>
+                
+                </View>
+              </TouchableOpacity>
+             
+                      
+                      {/*Modal Principal*/}
 
-          </View>       
-           
+              <Modal
+                animationType='slide'
+                transparent={true}
+                visible={modalVisible}
+                style={{}}
+                onRequestClose={()=> setModalVisible(false)}
+                >
+                  <View style={styles.modal}>
+
+                    <View style={styles.overView}>
+                        <View style={{height:25,justifyContent:'center',alignItems:'center', }}>
+                          <View style={{}} >
+                            <TouchableOpacity style={{width:120,height:25,alignItems:'center',justifyContent:'center' }} onPress={()=>{setModalVisible(false)}}> 
+                            <View style={{width:80,height:4, backgroundColor:'#A6A6A6', borderRadius: 20}} ></View>                     
+                          </TouchableOpacity>
+                          </View>
+                        </View>
+
+                      {/*Pagar*/}
+
+                        <TouchableOpacity style={{height:60,justifyContent:'center' }}
+                        
+                      onPress={() => {
+                        
+                      }}>
+                      
+                      <View style={{flexDirection: 'row', width: '100%', alignItems:'center',justifyContent:'center'}}>
+                          <AntDesign name="checkcircle" size={22} color="black" />
+                          <Text style={{fontSize:20,color: 'black', fontWeight:'bold', marginLeft:15}}>Pagar</Text>
+                        </View>
+                      </TouchableOpacity>
+                      <View style={{height:1, width: '100%', backgroundColor: '#ECECEC'}}></View>
+
+                      {/*Editar*/}
+                      <TouchableOpacity style={{height:60,justifyContent:'center' }}
+                      onPress={()=>navigation.navigate('Atual')}>
+                      
+                      <View style={{flexDirection: 'row', width: '100%',alignItems:'center', justifyContent:'center' }}>
+                          <Entypo name="pencil" size={22} color="black" />
+                          <Text style={{fontSize:20,color: 'black', fontWeight:'bold', marginLeft:15}}>Editar</Text>
+                        </View>
+                      </TouchableOpacity>
+                      <View style={{height:1, width: '100%', backgroundColor: '#ECECEC'}}></View>
+                    
+    
+                      {/*Excluir*/}
+
+                      <TouchableOpacity style={{height:60,justifyContent:'center' }}
+                      onPress={()=>deleteView(key)}>
+                      <View style={{flexDirection: 'row', width: '100%',alignItems:'center',justifyContent:'center' }}>
+                          <FontAwesome name="trash" size={22} color="black" />
+                          <Text style={{fontSize:20,color: 'black', fontWeight:'bold', marginLeft:15}}>Excluir</Text>
+                        </View>
+                      </TouchableOpacity>
+                      <View style={{height:1, width: '100%', backgroundColor: '#ECECEC'}}></View>
+
+                    </View>
+
+                  </View>
+                
+              </Modal>
+
+              </View>       
+          </View>
     )
   };
   
@@ -329,6 +330,8 @@ const styles=StyleSheet.create({
  },
   container_2:{
      flex:1,
+     marginTop: 20,
+    
 
   },
   container_pesquisa:{
@@ -345,19 +348,14 @@ const styles=StyleSheet.create({
     marginLeft: 15
   },
   caixa:{ 
-    flex:1,
-    marginTop:20,
-    height:'120%', 
-    backgroundColor: '#FFFFFF',
     borderRadius: 5,
-    padding: 10
   },
      
   caixa_contant:{
     flex:1,
     flexDirection:'row',
     backgroundColor: '#FFFFFF',
-    height: 100,
+    height: 90,
     alignItems:'center'
   },  
   lista:{
