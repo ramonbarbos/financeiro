@@ -65,6 +65,7 @@ const styles=StyleSheet.create({
         borderBottomWidth: 1,
         fontSize: 15,
         justifyContent:'center',
+        padding: 20
         
        
       }

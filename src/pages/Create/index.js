@@ -2,6 +2,8 @@ import  React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Dimensions,TouchableOpacity} from 'react-native';
 
+import Select from '../../components/Select';
+import { callList } from '../../components/callList';
 import {Criar} from '../../database/criarbd'
 import Data from '../../components/Data';
 
@@ -12,7 +14,7 @@ export default function Create({navigation}) {
   const [valor, setValor] = useState('');
   const [descricao, setDescricao] = useState('');
   const [data, setData] = useState('');
-  const [categoria, setCategoria] = useState('');
+  const [categoria, setCategoria] = useState();
 
 
   function Salvar(valor,descricao,data,categoria){
@@ -59,16 +61,15 @@ export default function Create({navigation}) {
             onChangeText={setDescricao}
            
             />
-
+            <Text>{categoria}</Text>
             <Data/>
 
-            <TextInput 
-            style={styles.input_outros}
-            placeholder='Categoria'
-            keyboardType="default"
-           onChangeText={setCategoria}
-
-            />
+            <Select 
+             options={callList}
+             onChangeSelect={setCategoria}
+             text='Selecione uma categoria'
+             label={id}
+             />
 
             <TouchableOpacity 
             style={{backgroundColor:'#158CDA',width:'100%',height:45,borderRadius:2,marginTop:50,justifyContent:'center', alignItems:'center'}}
@@ -76,6 +77,10 @@ export default function Create({navigation}) {
             >
               <Text style={{color:'white', fontSize:20}}>Salvar</Text>
             </TouchableOpacity>
+
+            
+
+
         </View>
 
       </View>
@@ -99,13 +104,16 @@ const styles=StyleSheet.create({
       borderBottomWidth: 1,
       justifyContent:'center',
       textAlign:'center',
-      fontSize: 20
+      fontSize: 20,
+      padding: 20
+
     },
     input_outros:{
       width:'100%',
       height:60,
       borderBottomWidth: 1,
-      fontSize: 15
+      fontSize: 15,
+      padding: 20
      
     }
   });

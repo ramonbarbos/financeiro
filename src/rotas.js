@@ -67,6 +67,7 @@ function MyTabs(navigation) {
 
     <Tab.Screen
     name="Nova Despesa" 
+    
     component={Create}
     options={{
     headerShown: true,

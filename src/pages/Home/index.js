@@ -1,10 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
-import  React, { useState, useEffect } from 'react';
+import  React, { useCallback,useState, useEffect } from 'react';
 import { StyleSheet, Text, View,FlatList,TextInput, ScrollView, SafeAreaView,Image, TouchableOpacity, Alert, Modal } from 'react-native';
 import { Feather,FontAwesome, Entypo, Foundation,AntDesign} from '@expo/vector-icons';
+import { useFocusEffect } from '@react-navigation/native';
 
 import {Criar} from '../../database/criarbd'
-//import Header from '../../components/header';
+import Header from '../../components/header';
 import Barra from '../../components/barra';
 
 const db = Criar.getConnection();
@@ -84,7 +85,7 @@ export default function Home({navigation}) {
   }, []);
 
   //Visualizar Banco de dados SQLite
-  useEffect(() => {
+  useFocusEffect(useCallback(() => {
     db.transaction((tx) => {
       tx.executeSql(
         'SELECT user_id, user_valor, user_descricao,user_categoria FROM table_user',
@@ -98,7 +99,7 @@ export default function Home({navigation}) {
         }
       );
     });
-  }, []);
+  }, []));
 
 
 
@@ -179,7 +180,7 @@ export default function Home({navigation}) {
       let key = item.user_id
     return(
         
-        <View style={{alignItems:'center'}}> 
+        <View style={{alignItems:'center',}}> 
           <TouchableOpacity onPress={()=>{setModalVisible(true)}} style={styles.caixa_contant}>
               <View style={{flexDirection:'row',width:'100%',alignItems:'center',padding:20}}>
               <Barra/>
@@ -209,6 +210,7 @@ export default function Home({navigation}) {
             transparent={true}
             visible={modalVisible}
             style={{}}
+            onRequestClose={()=> setModalVisible(false)}
             >
               <View style={styles.modal}>
 
@@ -225,7 +227,9 @@ export default function Home({navigation}) {
 
                     <TouchableOpacity style={{height:60,justifyContent:'center' }}
                     
-                  onPress={() =>Pagar(item, pago)}>
+                  onPress={() => {
+                    
+                  }}>
                   
                   <View style={{flexDirection: 'row', width: '100%', alignItems:'center',justifyContent:'center'}}>
                       <AntDesign name="checkcircle" size={22} color="black" />
@@ -270,7 +274,9 @@ export default function Home({navigation}) {
   
   return (
     <ScrollView style={{backgroundColor: '#EAF7FF'}}>
-    <Header pagar={pago} /> 
+    <Header 
+    onChangeSelect={id=>alert(id)}
+    /> 
     {/*Passando parametros pelo componente */}
 
     <View style={styles.container}>
@@ -306,108 +312,6 @@ export default function Home({navigation}) {
 
 
 
-function Header({pagar}) {
-  const [total, setTotal] = useState([]); 
-  
-
-// Soma Total Banco de dados SQLite
-useEffect(() => {
-  db.transaction((tx) => {
-    tx.executeSql(
-      'SELECT  Sum(user_valor) AS user_total FROM table_user',
-      [],
-      (tx, results) => {
-        var temp = [];
-        for (let i = 0; i < results.rows.length; ++i)
-          temp.push(results.rows.item(i));
-          setTotal(temp);
-      }
-    );
-  });
-}, []);
-
-  /*Calculo total*/
-const Total=(item)=>{
-  return(
-      <View style={{ flexDirection:'row', alignItems:'center',marginLeft: 20 , }}>
-
-          <Foundation name="alert" size={50} color="white" style={{marginRight: 10}} />
-        <View style={{}}>
-          <View style={{alignItems:'flex-start'}}>
-              <Text style={{fontSize:18,color: '#FFFFFF'}}>Total</Text>
-              <Text style={{fontSize:20,color: '#FFFFFF', fontWeight:'bold'}} >{item.user_total},00 </Text>
-          </View>
-        </View>
-    
-
-      </View>
-    )
-}
-
-  /*Calculo pago*/
-  const Pago=(item)=>{
-
-    
-
-    return(
-        <View style={{ flexDirection:'row', alignItems:'center', }}>
-            <AntDesign name="checkcircle" size={44} color="#FFFFFF" style={{marginRight: 10}} />
-          <View style={{}}>
-            <View style={{alignItems:'flex-start'}}>
-                <Text style={{fontSize:18,color: '#FFFFFF'}}>Pago</Text>
-                <Text style={{fontSize:20,color: '#FFFFFF', fontWeight:'bold'}} >{pagar} </Text>
-                
-
-            </View>
-          </View>
-
-        </View>
-      )
-  }
-
-
-return (
-
-  <View style={{flex:1,backgroundColor: '#158CDA',height:180, padding:20,justifyContent:'center',alignItems:'center', }}>
-
-  {/*Navbar - Hamburguer */}
-  <View style={styles.user}>
-      <TouchableOpacity onPress={()=> navigation.navigate('Config')}>
-        <Entypo name="menu" size={40} color="white" />
-      </TouchableOpacity>
-
-      <View style={{width:'80%', alignItems:'center', }}>
-        <Text style={{fontSize:22,color: '#FFFFFF'}}>Junho</Text>
-      </View>
-  </View>
-
-  
-  {/*Valores - Pago e Total */}
-  <View style={{flexDirection: 'row-reverse', justifyContent:'space-between', width: '95%'}}>
-
-      <View style={{ flexDirection:'row', alignItems:'center'}}>
-      <FlatList
-          style={{marginTop:30}}
-          data={total}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({item}) => Total(item)}
-          />
-      </View>
-
-      <View style={{ flexDirection:'row', alignItems:'center'}}>
-      <FlatList
-          style={{marginTop:30}}
-          data={total}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({item}) => Pago(item)}
-          />
-      </View>
-  </View>
- 
-
-  </View>
-);
-}
 
 
 

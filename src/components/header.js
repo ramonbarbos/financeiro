@@ -57,7 +57,7 @@ const Total=(item)=>{
           <View style={{}}>
             <View style={{alignItems:'flex-start'}}>
                 <Text style={{fontSize:18,color: '#FFFFFF'}}>Pago</Text>
-                <Text style={{fontSize:20,color: '#FFFFFF', fontWeight:'bold'}} >{pagar}</Text>
+                <Text style={{fontSize:20,color: '#FFFFFF', fontWeight:'bold'}} >0,00</Text>
                 
 
             </View>
