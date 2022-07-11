@@ -60,7 +60,7 @@ export default function Home({navigation}) {
   const [view, setView] = useState([]); // Visualizar o BD
   const [modalVisible, setModalVisible] = useState(false); // modal
   const [editarVisible, setEditarVisible] = useState(''); // modal editar
-  const [pago, setPago] = useState('');
+  const [deleteId, setDeleteId] = useState();
  
 
 
